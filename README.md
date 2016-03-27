@@ -18,9 +18,9 @@ KittyJS.addKitty()
 
 *OPTIONAL*: KittyJS.addKitty() can accept 3 values:
 
-0. 0, a Tabby Cat named Ginger
-1. 1, an unnamed (as of now) pink kitty
-2. 2, a Siamese cat named Jack-Jack
+- 0 - a Tabby Cat named Ginger
+- 1 - an unnamed (as of now) pink kitty
+- 2 - a Siamese cat named Jack-Jack
 Otherwise, it will be a random kitty.
 
 ### 3. To remove a kitty, write:
