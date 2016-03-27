@@ -11,19 +11,25 @@ This software license is permissive because web software is difficult to keep fr
 ##USAGE:
 
 ### 1. Include this script
-<script src="kitty.js"></script>
+><script src="kitty.js"></script>
 
 ### 2. Somewhere in your Javascript code after the page loads, write:
-KittyJS.addKitty()  
+>StrayKitty.addKitty()  
 
-*OPTIONAL*: KittyJS.addKitty() can accept 3 values:
+*OPTIONAL*: StrayKitty.addKitty() can accept 3 values:
 
-- 0 - a Tabby Cat named Ginger
-- 1 - an unnamed (as of now) pink kitty
-- 2 - a Siamese cat named Jack-Jack
+>StrayKitty.addKitty(0)
+
+a Tabby Cat named Ginger
+>StrayKitty.addKitty(1)
+
+an unnamed (as of now) pink kitty
+>StrayKitty.addKitty(2)
+
+a Siamese cat named Jack-Jack
 Otherwise, it will be a random kitty.
 
 ### 3. To remove a kitty, write:
-KittyJS.removeKitty()
+>StrayKitty.removeKitty()
 
 It removes the first kitty added. If there are no kitties left, then it does nothing.
