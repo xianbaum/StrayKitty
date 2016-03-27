@@ -17,7 +17,7 @@ keep free software.
  USAGE:
 
  1. Include this script, like
- <script src="kitty.js"></script>
+ <script src="straykitties.js"></script>
  2. Somewhere in your Javascript code after the page loads, write:
  StrayKitty.addKitty()
     OPTIONAL: StrayKitty.addKitty() can accept 3 values:

@@ -11,7 +11,7 @@ This software license is permissive because web software is difficult to keep fr
 ##USAGE:
 
 ### 1. Include this script
-><script src="kitty.js"></script>
+><script src="straykitties.js"></script>
 
 ### 2. Somewhere in your Javascript code after the page loads, write:
 >StrayKitty.addKitty()  
