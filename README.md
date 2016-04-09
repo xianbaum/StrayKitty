@@ -11,10 +11,10 @@ This software license is permissive because web software is difficult to keep fr
 ##USAGE:
 
 ### 1. Host and include this script
-><script src="StrayKitty.js"></script>
+>&lt;script src="StrayKitty.js"></script>
 
 *NOTE* You don't have to host the script if you don't want to. You can alternatively include it by simply using this line this, hosted on Google Drive:
-><script src="http://googledrive.com/host/0B5aLusBWK-7fbWlUUFB3Y2FmWDQ/StrayKitty.js"></script>
+>&lt;script src="http<i></i>//googledrive.com/host/0B5aLusBWK-7fbWlUUFB3Y2FmWDQ/StrayKitty.js"&gt;&lt;/script&gt;
 
 ### 2. Somewhere in your Javascript code after the page loads, write:
 >StrayKitty.addKitty()  
