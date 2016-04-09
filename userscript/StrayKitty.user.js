@@ -283,9 +283,9 @@ StrayKitty.remKitty = function( ) {
             document.body.removeChild(StrayKitty.kitties[0].canvas)
     StrayKitty.kitties.shift();
 }
-
-window.addEventListener('load', function() { 
-  StrayKitty.addKitty(0);
-  StrayKitty.addKitty(1);
-  StrayKitty.addKitty(2);
-})
+if( window.top === window.self )
+    window.addEventListener('load', function() { 
+	StrayKitty.addKitty(0);
+	StrayKitty.addKitty(1);
+	StrayKitty.addKitty(2);
+    });
