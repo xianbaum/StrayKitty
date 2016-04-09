@@ -3,7 +3,7 @@
 // @namespace   http://christianbaum.com
 // @description A cat toy
 // @include     *
-// @version     1
+// @version     2
 // @grant       none
 // ==/UserScript==
 /*
