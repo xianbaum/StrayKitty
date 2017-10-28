@@ -5,6 +5,11 @@ var cpx = require("cpx")
 
 var arg = process.argv[2];
 
+if (!fs.existsSync(__dirname + "/out/")){
+    console.log("out/ doesn't exist, creating out/");
+    fs.mkdirSync(__dirname + "/out/");
+}
+
 if(arg === "clean") {
     var dir = fs.readdirSync(__dirname + "/out");
     for(var i = 0; i < dir.length; i++){
