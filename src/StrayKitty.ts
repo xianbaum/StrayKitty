@@ -84,7 +84,7 @@ export class StrayKitty {
     ]
     private updateState(fps: number){
         //Universal for all states except grabbing
-        if (this.state != KittyStates.Grabbed &&
+        if (!this.isBeingGrabbed &&
             this.y < window.innerHeight - 32) {
             this.state = KittyStates.Falling;
         }
@@ -188,11 +188,17 @@ export class StrayKitty {
     private checkBounds() {
         if (this.x < 0) {
             this.x = 0;
-            this.flip();
+            if(!this.isBeingGrabbed) {
+                this.flip();                
+            }
+            this.xVector = -this.xVector;
         }
         else if (this.x > window.innerWidth - 32) {
             this.x = window.innerWidth - 32;
-            this.flip()
+            if(!this.isBeingGrabbed) {
+                this.flip();                
+            }
+            this.xVector = -this.xVector;            
         }
         if (this.y < 0) {
             this.y = 0;

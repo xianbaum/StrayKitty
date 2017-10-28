@@ -1,4 +1,4 @@
-#StrayKitty
+# StrayKitty
 A cat toy
 
 A little poem:
@@ -6,33 +6,79 @@ A little poem:
 sheep.exe  
 I am not a free
 
-This software license is permissive because web software is difficult to keep free software.
+## Add-on usage
 
-##USAGE:
+I am currently in the process of publishing an add-on for Firefox. Afterwards, I will create a Chrome add-on
+
+## UserScript usage:
+
+### 1. Get GreaseMonkey or a similar add-on that can run UserScripts
+
+### 2. Install this add-on
+
+
+
+## Script Usage:
 
 ### 1. Host and include this script
-><script src="StrayKitty.js"></script>
-
-*NOTE* You don't have to host the script if you don't want to. You can alternatively include it by simply using this line this, hosted on Google Drive:
-><script src="http://googledrive.com/host/0B5aLusBWK-7fbWlUUFB3Y2FmWDQ/StrayKitty.js"></script>
+>&lt;script src="StrayKitty.js">&lt;/script>
 
 ### 2. Somewhere in your Javascript code after the page loads, write:
->StrayKitty.addKitty()  
+>var myManager = new StrayKittyManager(fps).addKitty()  
 
 *OPTIONAL*: StrayKitty.addKitty() can accept 3 values:
 
->StrayKitty.addKitty(0)
+>StrayKittyManager.addKitty(0)
 
 a Tabby Cat named Ginger
->StrayKitty.addKitty(1)
+>StrayKittyManager.addKitty(1)
 
 an unnamed (as of now) pink kitty
->StrayKitty.addKitty(2)
+>StrayKittyManager.addKitty(2)
 
 a Siamese cat named Jack-Jack
-Otherwise, it will be a random kitty.
+If no value is provided, it will choose one for you.
 
 ### 3. To remove a kitty, write:
->StrayKitty.removeKitty()
+>StrayKittyManager.removeKitty()
 
 It removes the first kitty added. If there are no kitties left, then it does nothing.
+
+### 4. To 
+
+## Building
+
+### Prerequisites
+
+To build it, you will need TypeScript, Node and NPM.
+
+Install the required packages with
+
+>npm install
+
+### Building it as a browser JavaScript library
+
+To build it as a JavaScript library, type
+
+> npm run js
+
+### Building it as a UserScript
+
+To build it as a UserScript add-on, type
+
+> npm run userscript
+
+### Building it as a WebExtension
+
+To build it as a WebExtension add-on, type
+
+> npm run webextension
+
+### Cleaning out/ and tsout/ folders
+
+tsout/ is a folder created by the TypeScript compilation process. 
+ It is then compiled by browserify into the out/ folder. I also copy some files into the out/ folder depending on what is being built. If you are building different versions, you may want to consider typing
+ 
+ > npm run clean 
+
+in between each build.

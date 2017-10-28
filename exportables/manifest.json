@@ -1,18 +1,23 @@
 {
+    "description": "A browser kitty toy",    
     "manifest_version": 2,
     "name": "Stray Kitty",
-    "version": "0.0.1",
-    "description": "A browser kitty toy",
+    "version": "0.2",
     "browser_action": {
+        "browser_style": true,
+        "default_popup": "popup.html",        
+        "default_icon": {
+            "16": "icon-16.png",
+            "48": "icon-48.png"
+        }
     },
     "content_scripts": [
         {
-            "matches": [
-                "all_urls"
-            ],
-            "js": ["straykitty.js"]
+          "matches": ["<all_urls>"],
+          "js": ["straykitty.js"]
         }
-    ],
+      ],
     "permissions": [
+        "contextMenus"
     ]
 }

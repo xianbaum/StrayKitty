@@ -52,6 +52,14 @@ export class StrayKittyManager {
             }
         }
     }
+    clearKitties() {
+        for(var k of this.kitties){
+            if(k !== undefined) {
+                k.dispose();
+            }
+        }
+        this.kitties = [];
+    }
     start() {
         if(this.intervalId === undefined) {
             this.intervalId = setInterval(this.update, 1000/this.fps);
