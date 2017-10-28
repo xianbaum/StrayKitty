@@ -6,6 +6,14 @@ console.log("Generating image...");
 
 var arg = process.argv[2];
 
+if(arg === "clean") {
+    var dir = fs.readdirSync(__dirname + "/out");
+    for(var i = 0; i < dir.length; i++){
+        fs.unlinkSync(__dirname + "/out/" + dir[i]);        
+    }
+    return;
+}
+
 var base64Image = 
 "var imgsrc = \"data:image/gif;base64," + 
     new Buffer(fs.
@@ -31,7 +39,7 @@ if(arg === "jsexport.js") {
     cpx.copy(__dirname+"/exportables/manifest.json", "out/")
     outname = "straykitty.js"
 }
-var bundleFs = fs.createWriteStream(__dirname + '/out/'+outname);
+var bundleFs = fs.createWriteStream(__dirname + "/out/"+outname);
 console.log("Bundling...")
 var b = browserify()
 b.add("./tsout/"+ process.argv[2]);

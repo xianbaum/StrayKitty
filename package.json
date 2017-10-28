@@ -9,6 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "clean": "node exportScript.js clean",
     "tsc": "tsc",
     "js": "npm run tsc && node exportScript.js jsexport.js",
     "userscript": "npm run tsc && node exportScript.js userscriptmain.js",
