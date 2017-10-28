@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis":true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "outDir": "tsout"
+    },
+    "include": [
+        "src/*"
+    ]
+}

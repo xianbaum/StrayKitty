@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="straykitty.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        var boss = new StrayKittyManager(30);
+        for(var i = 0; i < 3; i++){
+          boss.addKitty();
+        }
+        boss.start();
+      });
+    </script>
+    <title>Christian Baum's Cat Sim</title>
+    <meta charset = "UTF-8"/>
+  </head>
+  <body>
+  </body>
+</html>

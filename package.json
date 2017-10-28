@@ -1,0 +1,27 @@
+{
+  "name": "straykitty",
+  "version": "1.0.2",
+  "description": "A kitty scripts",
+  "dependencies": {
+    "browserify": "^14.5.0",
+    "cpx": "^1.5.0",
+    "prependify": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "tsc": "tsc",
+    "js": "npm run tsc && node exportScript.js jsexport.js",
+    "userscript": "npm run tsc && node exportScript.js userscriptmain.js",
+    "webextension": "npm run tsc && node exportScript.js webextensionmain.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xianbaum/StrayKitty.git"
+  },
+  "author": "Christian Michael Baum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xianbaum/StrayKitty/issues"
+  },
+  "homepage": "https://github.com/xianbaum/redditx#readme"
+}
