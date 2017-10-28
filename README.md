@@ -74,7 +74,11 @@ The amount of kitties can be viewed with:
 
 To build it, you will need TypeScript, Node and NPM.
 
-Install the required packages with
+First, clone the repository:
+
+>git clone https://github.com/xianbaum/StrayKitty.git
+
+Then, install the required packages with
 
 >npm install
 
@@ -98,8 +102,9 @@ To build it as a WebExtension add-on, type
 
 ### Cleaning out/ and tsout/ folders
 
-tsout/ is a folder created by the TypeScript compilation process. 
- It is then compiled by browserify into the out/ folder. I also copy some files into the out/ folder depending on what is being built. If you are building different versions, you may want to consider typing
+tsout/ is a folder created by the TypeScript compilation process.
+
+It is then compiled by browserify into the out/ folder. The build script also copy some files into the out/ folder depending on what is being built. If you are building different versions, you may want to consider typing
  
  > npm run clean 
 
