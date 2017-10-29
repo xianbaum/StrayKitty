@@ -24,27 +24,45 @@ I am currently in the process of publishing an add-on for Firefox. Afterwards, I
 >&lt;script src="StrayKitty.js">&lt;/script>
 
 ### 2. Somewhere in your Javascript code after the page loads, write:
->var myManager = new StrayKittyManager(fps).addKitty()  
+>var myManager = new StrayKittyManager(fps).addKitty();
+>myManager.start();
 
 *OPTIONAL*: StrayKitty.addKitty() can accept 3 values:
 
->StrayKittyManager.addKitty(0)
+>StrayKittyManager.addKitty(0);
 
 a Tabby Cat named Ginger
->StrayKittyManager.addKitty(1)
+>myManager.addKitty(1);
 
 an unnamed (as of now) pink kitty
->StrayKittyManager.addKitty(2)
+>myManager.addKitty(2);
 
 a Siamese cat named Jack-Jack
 If no value is provided, it will choose one for you.
 
 ### 3. To remove a kitty, write:
->StrayKittyManager.removeKitty()
+>myManager.removeKitty()
 
-It removes the first kitty added. If there are no kitties left, then it does nothing.
+It removes the oldest kitty added. If there are no kitties left, then it does nothing.
 
-### 4. To 
+To remove a specific kitty, a number can be applied. It removes the kitty in the order that it was added. It starts at 0. This will remove the 3rd kitty:
+
+>myManager.removeKitty(2)
+
+### 4. Controlling execution
+
+StrayKitty can be paused with
+>myManager.pause();
+
+It can be resumed or started with
+>myManager.start();
+
+The script will not run unless the start() method is called.
+
+The execution can be toggled between start and pause with
+>myManager.toggle();
+
+### 5. Extra informatoin
 
 ## Building
 
