@@ -62,7 +62,11 @@ The script will not run unless the start() method is called.
 The execution can be toggled between start and pause with
 >myManager.toggle();
 
-### 5. Extra informatoin
+### 5. Extra information
+
+The amount of kitties can be viewed with:
+
+>myManager.kittyCount
 
 ## Building
 
