@@ -47,12 +47,12 @@ export class StrayKitty {
         return this._dir;
     }
     private set direction(value) {
-        if(this._dir !== value) {
+        if (this._dir !== value) {
             let context = this.canvas.getContext("2d");
-            if(context === null) {
+            if (context === null) {
                 throw new ReferenceError("Context is null :c");
             }
-            if(this._dir !== undefined || 
+            if (this._dir !== undefined ||
                 this._dir === undefined &&
                 value === Direction.Right) {
                 context.translate(32, 0);
@@ -70,25 +70,25 @@ export class StrayKitty {
         return <KittyStates>Math.floor(Math.random() * 8)
     }
     private static image: HTMLImageElement = new Image();
-    private static readonly frames =[
+    private static readonly frames = [
         [0], //Standing
         [0, 1],//Walking
-        [3,2],//Running
+        [3, 2],//Running
         [4],//Yawning
-        [5,6],//Sleeping
+        [5, 6],//Sleeping
         [7],//Laying
         [8],//Sitting
         [9, 10],//Licking
         [1, 2, 3],//Grabbed
-        [2,3] // Falling
+        [2, 3] // Falling
     ]
-    private updateState(fps: number){
+    private updateState(fps: number) {
         //Universal for all states except grabbing
         if (!this.isBeingGrabbed &&
             this.y < window.innerHeight - 32) {
             this.state = KittyStates.Falling;
         }
-        switch(this.state) {
+        switch (this.state) {
             case KittyStates.Falling:
                 this.updateFalling(fps);
                 break;
@@ -119,56 +119,56 @@ export class StrayKitty {
         }
     }
     private updateSitting() {
-        this.checkAndChangeState( () =>
+        this.checkAndChangeState(() =>
             Math.random() > 0.4 ? KittyStates.Yawning
-            : KittyStates.Standing
+                : KittyStates.Standing
         );
     }
     private updateLaying() {
-        this.checkAndChangeState( () =>
-        Math.random() > 0.33 ? (
-            Math.random() > 0.5 ? KittyStates.Running
-                : KittyStates.Sleeping )
+        this.checkAndChangeState(() =>
+            Math.random() > 0.33 ? (
+                Math.random() > 0.5 ? KittyStates.Running
+                    : KittyStates.Sleeping)
                 : KittyStates.Sitting
         );
     }
     private updateLicking() {
-        this.checkAndChangeState( () =>
-        Math.random() > 0.33 ? (
-            Math.random() > 0.5 ? KittyStates.Laying
-                : KittyStates.Sleeping )
+        this.checkAndChangeState(() =>
+            Math.random() > 0.33 ? (
+                Math.random() > 0.5 ? KittyStates.Laying
+                    : KittyStates.Sleeping)
                 : KittyStates.Sitting
         );
     }
     private updateYawning() {
-        this.checkAndChangeState( () =>
-                Math.random() > 0.33 ? (
-                    Math.random() > 0.5 ? KittyStates.Walking
-                        : KittyStates.Licking )
-                        : KittyStates.Laying
+        this.checkAndChangeState(() =>
+            Math.random() > 0.33 ? (
+                Math.random() > 0.5 ? KittyStates.Walking
+                    : KittyStates.Licking)
+                : KittyStates.Laying
         );
     }
     private updateSleeping() {
-        this.checkAndChangeState( () => 
+        this.checkAndChangeState(() =>
             Math.random() > 0.4 ?
                 KittyStates.Sitting
                 : KittyStates.Standing
         );
     }
     private updateStanding() {
-        this.checkAndChangeState( () => StrayKitty.randomState() );
+        this.checkAndChangeState(() => StrayKitty.randomState());
     }
     private updateWalking() {
-        this.checkAndChangeState( () => StrayKitty.randomState() );
+        this.checkAndChangeState(() => StrayKitty.randomState());
         this.xVector = this.direction == Direction.Right ? 1 : -1;
     }
     private updateRunning() {
-        this.checkAndChangeState( () => StrayKitty.randomState() );
+        this.checkAndChangeState(() => StrayKitty.randomState());
         this.xVector = this.direction == Direction.Right ? 2 : -2;
     }
-    private updateFalling(fps: number){
-        if(this.y < window.innerHeight - 32) {
-            this.yVector = this.yVector + 2 * (1 / fps)            
+    private updateFalling(fps: number) {
+        if (this.y < window.innerHeight - 32) {
+            this.yVector = this.yVector + 2 * (1 / fps)
         } else {
             if (Math.abs(this.yVector) < 0.1) {
                 this.y = window.innerHeight - 32;
@@ -178,27 +178,27 @@ export class StrayKitty {
         }
     }
     private checkAndChangeState(newStatecalculator: () => KittyStates) {
-        if(this.animTimerOverdue) {
+        if (this.animTimerOverdue) {
             this.animMax = Math.floor(Math.random() * 30) + 10;
             this.animTimer = 0;
             this.state = newStatecalculator();
-            this.direction = StrayKitty.randomDir();             
+            this.direction = StrayKitty.randomDir();
         }
     }
     private checkBounds() {
         if (this.x < 0) {
             this.x = 0;
-            if(!this.isBeingGrabbed) {
-                this.flip();                
+            if (!this.isBeingGrabbed) {
+                this.flip();
             }
             this.xVector = -this.xVector;
         }
         else if (this.x > window.innerWidth - 32) {
             this.x = window.innerWidth - 32;
-            if(!this.isBeingGrabbed) {
-                this.flip();                
+            if (!this.isBeingGrabbed) {
+                this.flip();
             }
-            this.xVector = -this.xVector;            
+            this.xVector = -this.xVector;
         }
         if (this.y < 0) {
             this.y = 0;
@@ -221,10 +221,10 @@ export class StrayKitty {
         this.y += this.yVector * (100 / fps);
     }
     private draw() {
-        this.canvas.style.top = ""+this.y+"px";
-        this.canvas.style.left = ""+this.x+"px";
+        this.canvas.style.top = "" + this.y + "px";
+        this.canvas.style.left = "" + this.x + "px";
         let context = this.canvas.getContext("2d");
-        if(context === null) {
+        if (context === null) {
             throw new ReferenceError("context is null!");
         }
         context.clearRect(0, 0, 32, 32);
@@ -241,12 +241,12 @@ export class StrayKitty {
         this.canvas.style.position = "fixed"
         this.canvas.style.top = "0px";
         this.canvas.style.left = "0px";
-        this.canvas.style.zIndex = "300";
+        this.canvas.style.zIndex = "2147400000";
         this.canvas.width = 32;
         this.canvas.height = 32;
         this.canvas.addEventListener("mousedown", (event) => {
             this.mouseXOffset = this.x - event.clientX;
-            this.mouseYOffset = this.y - event.clientY;            
+            this.mouseYOffset = this.y - event.clientY;
             this.state = KittyStates.Grabbed;
         });
         document.body.appendChild(this.canvas);
@@ -260,27 +260,27 @@ export class StrayKitty {
             this.animTimer = 0;
         this.x = Math.floor(Math.random() * window.innerWidth - 32);
         this.state = KittyStates.Standing;
-        this.canvas = <HTMLCanvasElement>document.getElementById("kittycanvas"+this.id);
+        this.canvas = <HTMLCanvasElement>document.getElementById("kittycanvas" + this.id);
     }
     update(fps: number) {
         this.animTimer += 10 / fps
         this.updateState(fps);
         this.move(fps);
-        this.checkBounds() 
+        this.checkBounds()
         this.draw();
     }
     flip() {
-        if(this.direction === Direction.Left) {
+        if (this.direction === Direction.Left) {
             this.direction = Direction.Right;
         } else {
             this.direction = Direction.Left;
         }
     }
-    updateGrabbed(e: MouseEvent){
+    updateGrabbed(e: MouseEvent) {
         this.x = e.clientX + this.mouseXOffset;
         this.y = e.clientY + this.mouseYOffset;
     }
-    release(){
+    release() {
         this.state = KittyStates.Falling;
     }
     get isBeingGrabbed() {

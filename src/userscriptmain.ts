@@ -3,7 +3,7 @@ declare var imgsrc: string;
 
 function setCss(div: HTMLButtonElement, xPos: number) {
     div.style.width = "16px";
-    div.style.height = "16px";    
+    div.style.height = "16px";
     div.style.backgroundColor = "pink";
     div.style.borderColor = "black";
     div.style.borderWidth = "1px";
@@ -15,7 +15,7 @@ function setCss(div: HTMLButtonElement, xPos: number) {
     div.style.position = "fixed";
     div.style.top = "1px";
     div.style.zIndex = "10000";
-    div.style.left = ""+xPos+"px";
+    div.style.left = "" + xPos + "px";
     div.style.padding = "0";
     div.style.textAlign = "center";
 }
@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setCss(removeButton, 18);
     addButton.onclick = () => {
         boss.addKitty();
-        if(!document.body.contains(removeButton)) {
+        if (!document.body.contains(removeButton)) {
             document.body.appendChild(removeButton);
         }
     }
     addButton.innerHTML = "+";
     removeButton.onclick = () => {
         boss.removeKitty();
-        if(boss.kittyCount === 0 && document.body.contains(removeButton)) {
+        if (boss.kittyCount === 0 && document.body.contains(removeButton)) {
             document.body.removeChild(removeButton);
         }
     }

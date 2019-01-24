@@ -1,15 +1,28 @@
 html, body {
     width: 300px;
+    padding: 0;
+    margin: 0;
 }
 
-div {
-  width: 100%;
-  padding: 4px;
-  font-size: 1.5em;
-  text-align: center;
-  cursor: pointer;
+div.container {
+    width: 100%;
+    font-size: 1.25em;
+    user-select: none;
 }
 
-div:hover {
-  background-color: pink;
+div.content {
+    padding: 4px 4px 4px 1em;
+}
+
+div.button {
+    padding: 4px 4px 4px 1em;
+    cursor: pointer;
+}
+
+div.button:hover {
+    background-color: pink;
+}
+
+div#successPage {
+    display: none;
 }

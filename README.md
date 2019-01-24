@@ -1,70 +1,65 @@
 # StrayKitty
 A cat toy
 
-A little poem:
+A short poem:
 
-sheep.exe  
-I am not a free
+*sheep.exe*  
+*I am not a free*
 
 ## Add-on usage
 
-I am currently in the process of publishing an add-on for Firefox. Afterwards, I will create a Chrome add-on
+For Firefox-based browsers, [Stray Kitty can be installed from here](https://addons.mozilla.org/en-US/firefox/addon/stray-kitty/).
+
+For chromium based browsers, [Stray Kitty can be installed from here](https://chrome.google.com/webstore/detail/stray-kitty/pdiefgmeejbkamgippdjdchpgkdnelbl)
 
 ## UserScript usage:
 
-### 1. Get GreaseMonkey or a similar add-on that can run UserScripts
-
-### 2. Install this add-on
-
-
+1. Get GreaseMonkey or a similar add-on that can run UserScripts
+2. Install this add-on
+3. Click on the + button to add a kitty. Click on the - button to remove a kitty.
 
 ## Script Usage:
 
-### 1. Host and include this script
->&lt;script src="StrayKitty.js">&lt;/script>
+Host and include this script
+> &lt;script src="StrayKitty.js">&lt;/script>
 
-### 2. Somewhere in your Javascript code after the page loads, write:
->var myManager = new StrayKittyManager(fps).addKitty();
+Somewhere in your Javascript code after the page loads, write:
+
+>var myManager = new StrayKittyManager(fps);
 >myManager.start();
 
-*OPTIONAL*: StrayKitty.addKitty() can accept 3 values:
+To add a kitty, call StrayKittyManager.addKitty().
 
->StrayKittyManager.addKitty(0);
+**OPTIONAL**: StrayKittyManager.addKitty() can accept 3 values:
 
-a Tabby Cat named Ginger
->myManager.addKitty(1);
+>myManager.addKitty(0); //a Tabby Cat named Ginger  
+>myManager.addKitty(1); //a pink cat named Elizabeth  
+>myManager.addKitty(2); //a Siamese cat named Jack-Jack  
 
-an unnamed (as of now) pink kitty
->myManager.addKitty(2);
+If no value is provided, a kitty will be chosen one for you. This method has a return value of the number of kitties currently on screen.
 
-a Siamese cat named Jack-Jack
-If no value is provided, it will choose one for you.
-
-### 3. To remove a kitty, write:
+To remove a kitty, write:  
 >myManager.removeKitty()
 
-It removes the oldest kitty added. If there are no kitties left, then it does nothing.
-
-To remove a specific kitty, a number can be applied. It removes the kitty in the order that it was added. It starts at 0. This will remove the 3rd kitty:
+It removes the oldest kitty added. If there are no kitties left, then it does nothing. To remove a specific kitty, a number can be applied. The number is in the order that it was added, starting at 0 from the oldest. This will remove the 3rd kitty:
 
 >myManager.removeKitty(2)
 
-### 4. Controlling execution
+StrayKitty can be paused with:
 
-StrayKitty can be paused with
 >myManager.pause();
 
-It can be resumed or started with
+It can be resumed or started with:
+
 >myManager.start();
 
-The script will not run unless the start() method is called.
+**NOTE**: The script will not run unless the start() method is called.
 
-The execution can be toggled between start and pause with
+The execution can be toggled between start and pause with:
+
 >myManager.toggle();
 
-### 5. Extra information
-
-The amount of kitties can be viewed with:
+The amount of kitties can be viewed with the read-only property:
 
 >myManager.kittyCount
 
@@ -72,40 +67,25 @@ The amount of kitties can be viewed with:
 
 ### Prerequisites
 
-To build it, you will need TypeScript, Node and NPM.
+To build it, you will need nodejs and npm installed. First, clone the repository then install the required packages.
 
-First, clone the repository:
-
->git clone https://github.com/xianbaum/StrayKitty.git
-
-Then, install the required packages with
-
+>git clone https://github.com/xianbaum/StrayKitty.git  
 >npm install
 
 ### Building it as a browser JavaScript library
-
-To build it as a JavaScript library, type
 
 > npm run js
 
 ### Building it as a UserScript
 
-To build it as a UserScript add-on, type
-
 > npm run userscript
 
 ### Building it as a WebExtension
-
-To build it as a WebExtension add-on, type
 
 > npm run webextension
 
 ### Cleaning out/ and tsout/ folders
 
-tsout/ is a folder created by the TypeScript compilation process.
-
-It is then compiled by browserify into the out/ folder. The build script also copy some files into the out/ folder depending on what is being built. If you are building different versions, you may want to consider typing
+tsout/ is a folder created by the TypeScript compilation process. It is then compiled by browserify into the out/ folder. The build script also copy some files into the out/ folder depending on what is being built. If you are building different versions, in between builds you may consider typing:
  
- > npm run clean 
-
-in between each build.
+> npm run clean 

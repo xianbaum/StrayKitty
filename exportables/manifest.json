@@ -2,7 +2,7 @@
     "description": "A browser kitty toy",    
     "manifest_version": 2,
     "name": "Stray Kitty",
-    "version": "0.2",
+    "version": "1.0.3",
     "browser_action": {
         "browser_style": true,
         "default_popup": "popup.html",        
@@ -13,11 +13,25 @@
     },
     "content_scripts": [
         {
-          "matches": ["<all_urls>"],
-          "js": ["straykitty.js"]
+            "matches": ["<all_urls>"],
+            "js": [
+                "straykitty.js"
+            ]
         }
-      ],
+    ],
+    "options_ui": {
+        "page": "settings.html",
+        "open_in_tab": false
+    },
     "permissions": [
-        "contextMenus"
-    ]
+        "contextMenus",
+        "activeTab",
+        "tabs",
+        "storage"
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "straykitty@christianbaum.com"
+        }
+    }
 }

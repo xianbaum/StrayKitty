@@ -4,24 +4,25 @@ export class StrayKittyManager {
     private grabbedKitty?: StrayKitty;
     private intervalId?: number;
     private releaseGrabbedKitty = () => {
-        if(this.grabbedKitty !== undefined) {
+        if (this.grabbedKitty !== undefined) {
             this.grabbedKitty.release();
-            this.grabbedKitty = undefined;            
+            this.grabbedKitty = undefined;
         }
     }
     private updateGrabbedKitty = (event: MouseEvent) => {
-        if(this.grabbedKitty !== undefined) {
+        if (this.grabbedKitty !== undefined) {
             this.grabbedKitty.updateGrabbed(event);
         }
     }
     private update = () => {
-        this.kitties.forEach( (kitty) => {
+        this.kitties.forEach((kitty) => {
             kitty.update(this.fps);
-            if(kitty.isBeingGrabbed) {
-                if(this.grabbedKitty !== undefined && this.grabbedKitty !== kitty) {
+            if (kitty.isBeingGrabbed) {
+                if (this.grabbedKitty !== undefined &&
+                    this.grabbedKitty !== kitty) {
                     this.releaseGrabbedKitty();
                 }
-                this.grabbedKitty = kitty;                
+                this.grabbedKitty = kitty;
             }
         })
     }
@@ -31,54 +32,50 @@ export class StrayKittyManager {
         document.addEventListener("mouseup", this.releaseGrabbedKitty);
         this.kitties = [];
     }
-    get kittyCount(){
+    get kittyCount() {
         return this.kitties.length;
     }
-    addKitty(type?: KittyType){
-        this.kitties.push(new StrayKitty(type));
+    addKitty(type?: KittyType): number {
+        return this.kitties.push(new StrayKitty(type)) - 1;
     }
-    removeKitty(num?: number){
-        if(typeof num === undefined) {
+    removeKitty(num?: number): void {
+        if (typeof num === undefined) {
             let kitty = this.kitties.pop();
-            if(kitty !== undefined) {
-                kitty.dispose();                
+            if (kitty !== undefined) {
+                kitty.dispose();
             }
         } else {
             let kitties = this.kitties.splice(<number>num, 1)
-            if(kitties !== undefined) {
-                for(var k of kitties){
-                    k.dispose();                    
-                }
-            }
-        }
-    }
-    clearKitties() {
-        for(var k of this.kitties){
-            if(k !== undefined) {
+            for (var k of kitties) {
                 k.dispose();
             }
         }
+    }
+    clearKitties(): void {
+        for (var k of this.kitties) {
+            k.dispose();
+        }
         this.kitties = [];
     }
-    start() {
-        if(this.intervalId === undefined) {
-            this.intervalId = setInterval(this.update, 1000/this.fps);
+    start(): void {
+        if (this.intervalId === undefined) {
+            this.intervalId = window.setInterval(this.update, 1000 / this.fps);
         }
     }
-    pause() {
-        if(this.intervalId !== undefined) {
+    pause(): void {
+        if (this.intervalId !== undefined) {
             clearInterval(this.intervalId)
-            this.intervalId = undefined;            
+            this.intervalId = undefined;
         }
     }
     toggle() {
-        if(this.intervalId !== undefined) {
+        if (this.intervalId !== undefined) {
             this.pause();
         } else {
             this.start();
         }
     }
-    setImageSrc(src: string){
+    setImageSrc(src: string) {
         StrayKitty.setImageSrc(src);
     }
 }
