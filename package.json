@@ -13,7 +13,7 @@
     },
     "scripts": {
         "clean": "node exportScript.js clean",
-        "tsc": "./node_modules/typescript/bin/tsc",
+        "tsc": "npx tsc",
         "js": "npm run tsc && node exportScript.js jsexport.js",
         "userscript": "npm run tsc && node exportScript.js userscriptmain.js",
         "webextension": "npm run tsc && node exportScript.js webextensionmain.js"
