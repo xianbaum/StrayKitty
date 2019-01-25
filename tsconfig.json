@@ -6,7 +6,7 @@
         "noImplicitThis":true,
         "strictNullChecks": true,
         "alwaysStrict": true,
-        "outDir": "tsout"
+        "outDir": "obj"
     },
     "include": [
         "src/*"

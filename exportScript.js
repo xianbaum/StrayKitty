@@ -5,22 +5,35 @@ var cpx = require("cpx");
 
 var arg = process.argv[2];
 
-if (!fs.existsSync(__dirname + "/out/")){
-    console.log("out/ doesn't exist, creating out/");
-    fs.mkdirSync(__dirname + "/out/");
-}
-
 if(arg === "clean") {
-    var dir = fs.readdirSync(__dirname + "/out");
-    for(var i = 0; i < dir.length; i++){
-        fs.unlinkSync(__dirname + "/out/" + dir[i]);
+    dir = fs.readdirSync(__dirname + "/");
+    var strayKittyIndex = dir.indexOf("straykitty.zip");
+    var objIndex = dir.indexOf("obj");
+    var distIndex = dir.indexOf("dist");
+    if(strayKittyIndex > -1) {
+        fs.unlinkSync(__dirname + "/straykitty.zip");
     }
-    var dir = fs.readdirSync(__dirname + "/tsout");
-    for(var i = 0; i < dir.length; i++){
-        fs.unlinkSync(__dirname + "/tsout/" + dir[i]);
+    if(distIndex > -1) {
+        var dir = fs.readdirSync(__dirname + "/dist");
+        for(var i = 0; i < dir.length; i++){
+            fs.unlinkSync(__dirname + "/dist/" + dir[i]);
+        }
+        fs.rmdirSync(__dirname + "/dist");
+    }
+    if(objIndex > -1) {
+        dir = fs.readdirSync(__dirname + "/obj");
+        for(var i = 0; i < dir.length; i++){
+            fs.unlinkSync(__dirname + "/obj/" + dir[i]);
+        }
+        fs.rmdirSync(__dirname + "/obj");
     }
     console.log("all clean ;3");
     return;
+}
+
+if (!fs.existsSync(__dirname + "/dist/")){
+    console.log("dist/ doesn't exist, creating dist/");
+    fs.mkdirSync(__dirname + "/dist/");
 }
 
 console.log("Generating image...");
@@ -36,7 +49,7 @@ var prepend = "";
 if(arg === "jsexport.js") {
     prepend += base64Image;
     console.log("Copying demo...");
-    cpx.copy(__dirname+"/exportables/demo.html", "out/");
+    cpx.copy(__dirname+"/exportables/demo.html", "dist/");
     outname = "straykitty.js";
 } else if(arg === "userscriptmain.js") {
     var meta = Buffer.from(fs.
@@ -47,21 +60,21 @@ if(arg === "jsexport.js") {
 } else if(arg === "webextensionmain.js") {
     prepend += base64Image;
     console.log("Copying webextension and friends...");
-    cpx.copy(__dirname+"/exportables/manifest.json", "out/");
-    cpx.copy(__dirname+"/node_modules/webextension-polyfill/dist/browser-polyfill.min.js", "out/");
-    cpx.copy(__dirname+"/exportables/icon-16.png", "out/");
-    cpx.copy(__dirname+"/exportables/icon-48.png", "out/");
-    cpx.copy(__dirname+"/exportables/popup.css", "out/");
-    cpx.copy(__dirname+"/exportables/popup.js", "out/");
-    cpx.copy(__dirname+"/exportables/popup.html", "out/");
-    cpx.copy(__dirname+"/exportables/settings.html", "out/");
-    cpx.copy(__dirname+"/exportables/settings.js", "out/");
+    cpx.copy(__dirname+"/exportables/manifest.json", "dist/");
+    cpx.copy(__dirname+"/node_modules/webextension-polyfill/dist/browser-polyfill.min.js", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-16.png", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-48.png", "dist/");
+    cpx.copy(__dirname+"/exportables/popup.css", "dist/");
+    cpx.copy(__dirname+"/exportables/popup.js", "dist/");
+    cpx.copy(__dirname+"/exportables/popup.html", "dist/");
+    cpx.copy(__dirname+"/exportables/settings.html", "dist/");
+    cpx.copy(__dirname+"/exportables/settings.js", "dist/");
     outname = "straykitty.js";
 }
-var bundleFs = fs.createWriteStream(__dirname + "/out/"+outname);
+var bundleFs = fs.createWriteStream(__dirname + "/dist/"+outname);
 console.log("Bundling...");
 var b = browserify();
-b.add("./tsout/"+ process.argv[2]);
+b.add("./obj/"+ process.argv[2]);
 b.plugin(prependify, prepend);
 b.bundle().pipe(bundleFs);
 

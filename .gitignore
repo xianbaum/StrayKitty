@@ -1,4 +1,6 @@
 node_modules/
 out/
 tsout
+dist/
+obj/
 straykitty.zip
