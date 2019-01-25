@@ -82,7 +82,10 @@ To build it, you will need nodejs and npm installed. First, clone the repository
 
 ### Building it as a WebExtension
 
+webextension builds an unpacked folder. webextension-release builds and zips
+
 > npm run webextension
+> npm run webextension-release
 
 ### Cleaning out/ and tsout/ folders
 
