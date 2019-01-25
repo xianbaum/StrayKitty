@@ -87,8 +87,8 @@ webextension builds an unpacked folder. webextension-release builds and zips
 > npm run webextension
 > npm run webextension-release
 
-### Cleaning out/ and tsout/ folders
+### Cleaning dist/ and obj/ folders
 
-tsout/ is a folder created by the TypeScript compilation process. It is then compiled by browserify into the out/ folder. The build script also copy some files into the out/ folder depending on what is being built. If you are building different versions, in between builds you may consider typing:
+obj/ is a folder created by the TypeScript compilation process. It is then compiled by browserify into the dist/ folder. The build script also copy some files into the dist/ folder depending on what is being built. If you are building different versions, in between builds you may consider typing:
  
 > npm run clean 
