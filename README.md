@@ -6,6 +6,10 @@ A short poem:
 *sheep.exe*  
 *I am not a free*
 
+## Demonstration
+
+Click on the cat icon in the top left of my site [https://www.christianbaum.com/](https://www.christianbaum.com/). Make the cats rain.
+
 ## Add-on usage
 
 For Firefox-based browsers, [Stray Kitty can be installed from here](https://addons.mozilla.org/en-US/firefox/addon/stray-kitty/).
