@@ -6,12 +6,21 @@ html, body {
 
 div.container {
     width: 100%;
-    font-size: 1.25em;
+    font-size: 1.25rem;
     user-select: none;
 }
 
 div.content {
     padding: 4px 4px 4px 1em;
+}
+
+div.content h1 {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+div.content p {
+    font-size: 1rem;
 }
 
 div.button {

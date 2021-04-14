@@ -1,16 +1,17 @@
 {
     "name": "straykitty",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A kitty scripts",
     "dependencies": {},
     "devDependencies": {
         "@types/node": "^10.17.49",
-        "adm-zip": "^0.4.16",
-        "browserify": "^14.5.0",
+        "adm-zip": "^0.5.5",
+        "browserify": "^17.0.0",
         "cpx": "^1.5.0",
         "prependify": "^1.3.0",
-        "typescript": "^3.9.7",
-        "webextension-polyfill": "^0.3.1"
+        "tinyify": "^3.0.0",
+        "typescript": "^4.2.4",
+        "webextension-polyfill": "^0.7.0"
     },
     "scripts": {
         "clean": "node exportScript.js clean",
@@ -30,5 +31,5 @@
     "bugs": {
         "url": "https://github.com/xianbaum/StrayKitty/issues"
     },
-    "homepage": "https://github.com/xianbaum/redditx#readme"
+    "homepage": "https://github.com/xianbaum/StrayKitty#readme"
 }

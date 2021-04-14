@@ -2,6 +2,7 @@
     function showErrorPage() {
         document.getElementById("errorPage").style.display = "block";
         document.getElementById("successPage").style.display = "none";
+        console.log("bad")
     }
     function sendMessage(message, retries){
         if(typeof retries !== "number") retries = 0;

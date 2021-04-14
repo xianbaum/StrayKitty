@@ -1,19 +1,22 @@
 {
-    "description": "A browser kitty toy",    
     "manifest_version": 2,
     "name": "Stray Kitty",
-    "version": "1.0.3",
+    "description": "A browser kitty toy",    
+    "version": "1.0.4",
     "browser_action": {
         "browser_style": true,
-        "default_popup": "popup.html",        
-        "default_icon": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "icons": {
             "16": "icon-16.png",
             "48": "icon-48.png"
-        }
     },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
+            "matches": ["*://*/*"],
             "js": [
                 "straykitty.js"
             ]
@@ -24,14 +27,14 @@
         "open_in_tab": false
     },
     "permissions": [
-        "contextMenus",
-        "activeTab",
         "tabs",
+        "webNavigation",
         "storage"
     ],
     "browser_specific_settings": {
         "gecko": {
             "id": "{2fbfe101-aa36-4cd9-98cc-0c2a191f8b47}"
         }
-    }
+    },
+    "web_accessible_resources": ["kitties.png"]
 }

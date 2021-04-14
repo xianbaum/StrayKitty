@@ -1,26 +1,6 @@
-export enum Direction {
-    Right,
-    Left
-}
-
-export enum KittyStates {
-    Standing = 0,
-    Walking = 1,
-    Running = 2,
-    Yawning = 3,
-    Sleeping = 4,
-    Laying = 5,
-    Sitting = 6,
-    Licking = 7,
-    Grabbed = 8,
-    Falling = 9
-}
-
-export enum KittyType {
-    Ginger = 0,
-    Elizabeth = 1,
-    JackJack = 2
-}
+import { Direction } from "./Direction";
+import { KittyStates } from "./KittyStates";
+import { KittyType } from "./KittyType";
 
 export class StrayKitty {
     private id: number;
@@ -70,6 +50,15 @@ export class StrayKitty {
         return <KittyStates>Math.floor(Math.random() * 8)
     }
     private static image: HTMLImageElement = new Image();
+    private static isInitialized: boolean = false;
+    private static initialize() {
+        if(StrayKitty.isInitialized) return;
+        StrayKitty.isInitialized = true;
+        StrayKitty.image.onerror = (e) => {
+            console.error(StrayKitty.image.src);
+            console.error(JSON.stringify(e));
+        };
+    } 
     private static readonly frames = [
         [0], //Standing
         [0, 1],//Walking
@@ -221,6 +210,7 @@ export class StrayKitty {
         this.y += this.yVector * (100 / fps);
     }
     private draw() {
+        if(!StrayKitty.imageIsLoaded) return;
         this.canvas.style.top = "" + this.y + "px";
         this.canvas.style.left = "" + this.x + "px";
         let context = this.canvas.getContext("2d");
@@ -235,6 +225,7 @@ export class StrayKitty {
             32, 32, 0, 0, 32, 32);
     }
     constructor(type?: KittyType) {
+        StrayKitty.initialize();
         this.id = StrayKitty.incrementalId;
         this.canvas = document.createElement("canvas");
         this.canvas.id = 'kittycanvas' + this.id;
@@ -288,6 +279,9 @@ export class StrayKitty {
     }
     static setImageSrc(value: string) {
         StrayKitty.image.src = value;
+    }
+    static get imageIsLoaded() {
+        return StrayKitty.image.complete && StrayKitty.image.naturalHeight !== 0;
     }
     dispose() {
         document.body.removeChild(this.canvas);

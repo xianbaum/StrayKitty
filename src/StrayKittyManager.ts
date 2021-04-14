@@ -1,4 +1,5 @@
-import { StrayKitty, KittyType } from "./StrayKitty";
+import { StrayKitty } from "./StrayKitty";
+import { KittyType } from "./KittyType";
 export class StrayKittyManager {
     private kitties: StrayKitty[];
     private grabbedKitty?: StrayKitty;

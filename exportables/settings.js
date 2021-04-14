@@ -1,5 +1,5 @@
 (() => {
-    const defaultFps = 30;
+    const defaultFps = 60;
     function saveSettings(fps) {
         browser.storage.sync.set({
             fps: fps

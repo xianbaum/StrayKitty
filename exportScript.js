@@ -1,6 +1,7 @@
 var fs = require("fs");
 var browserify = require("browserify");
 var prependify = require("prependify");
+var tinyifiy = require("tinyify");
 var cpx = require("cpx");
 
 var arg = process.argv[2];
@@ -62,20 +63,26 @@ if(arg === "jsexport.js") {
     console.log("Copying webextension and friends...");
     cpx.copy(__dirname+"/exportables/manifest.json", "dist/");
     cpx.copy(__dirname+"/node_modules/webextension-polyfill/dist/browser-polyfill.min.js", "dist/");
+    cpx.copy(__dirname+"/exportables/background.js", "dist/");
     cpx.copy(__dirname+"/exportables/icon-16.png", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-16-gray.png", "dist/");
     cpx.copy(__dirname+"/exportables/icon-48.png", "dist/");
     cpx.copy(__dirname+"/exportables/popup.css", "dist/");
     cpx.copy(__dirname+"/exportables/popup.js", "dist/");
     cpx.copy(__dirname+"/exportables/popup.html", "dist/");
     cpx.copy(__dirname+"/exportables/settings.html", "dist/");
     cpx.copy(__dirname+"/exportables/settings.js", "dist/");
+    cpx.copy(__dirname+"/exportables/kitties.png", "dist/");
     outname = "straykitty.js";
 }
 var bundleFs = fs.createWriteStream(__dirname + "/dist/"+outname);
-console.log("Bundling...");
+console.log("Browserifying...");
+
 var b = browserify();
-b.add("./obj/"+ process.argv[2]);
-b.plugin(prependify, prepend);
-b.bundle().pipe(bundleFs);
+b.add("./obj/"+ process.argv[2])
+    .plugin(tinyifiy)
+    .plugin(prependify, prepend)
+    .bundle()
+    .pipe(bundleFs);
 
 console.log("ok! :3");

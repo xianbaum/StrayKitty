@@ -5,21 +5,25 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="popup.css" />
-    <script src="browser-polyfill.min.js" type="application/javascript"></script>
-    <script src="popup.js" type="application/javascript"></script>
 </head>
 
 <body>
     <div class="container" id="successPage">
-        <div class="content button" id="add">Add kitty to tab</div>
-        <div class="content button" id="remove">Remove kitty from tab</div>
-        <div class="content button" id="clear">Clear kitties in this tab</div>
+        <div class="content button" id="add">
+          <img src="icon-48.png" />
+        </div>
+        <div class="content button" id="remove">Remove</div>
+        <div class="content button" id="clear">Clear</div>
     </div>
     <div class="container" id="errorPage">
       <div class="content">
-        Stray Kitty does not work here
+        <h2>Stray Kitty could not start here</h2>
+        <p>Stray Kitty will not work on some homepages, settings pages, extension/add-on stores, or pages that begin with about://, chrome-extension://, or chrome://, or file://.</p>
+        <p>If you have recently installed this extension, you may try reloading the page.</p>
       </div>
     </div>
+    <script src="browser-polyfill.min.js" type="application/javascript"></script>
+    <script src="popup.js" type="application/javascript"></script>
 </body>
 
 </html>
