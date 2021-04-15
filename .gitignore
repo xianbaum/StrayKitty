@@ -3,4 +3,6 @@ out/
 tsout
 dist/
 obj/
-straykitty.zip
+*.zip
+*.crx
+*.pem
