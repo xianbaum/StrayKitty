@@ -11,16 +11,19 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     document.addEventListener("DOMContentLoaded", activateIcon);
 }
 browser.runtime.onMessage.addListener(
-    (message: "add" | "remove" | "clear") => {
+    (message: "add-1" | "add-2" | "add-3" | "remove" | "clear") => {
         browser.storage.sync.get("fps").then((storage: any) => {
             switch (message) {
-                case "add":
+                case "add-1":
+                case "add-2":
+                case "add-3":
                     if (boss == null) {
                         StrayKitty.setImageSrc(browser.runtime.getURL("kitties.png"));
-                        boss = new StrayKittyManager(storage.fps || 30);
+                        boss = new StrayKittyManager(storage.fps || 60);
                         boss.start();
                     }
-                    boss.addKitty();
+                    let number = (+message.substr(4,1)) - 1;
+                    boss.addKitty(number);
                     break;
                 case "remove":
                     if (boss != null) boss.removeKitty();

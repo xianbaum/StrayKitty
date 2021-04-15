@@ -8,10 +8,9 @@ function clearTimeouts(tabId){
     }
 }
 
-browser.extension.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
     if (request.message === "activate_icon") {
-        console.error("activate " + sender.tab.id );
         clearTimeouts(sender.tab.id);
         browser.browserAction.setIcon({path: "icon-16.png", tabId: sender.tab.id});
     }
@@ -24,9 +23,7 @@ function handleUpdated(details) {
             browser.browserAction.setIcon({path: "icon-16-gray.png", tabId: details.tabId});
         }
         clearTimeouts(details.tabId);
-        console.error("start " + details.tabId );
         timeouts[details.tabId] = setTimeout(() => {
-            console.error("done " + details.tabId );
             clearTimeouts(details.tabId);
             browser.browserAction.setIcon({path: "icon-16-gray.png", tabId: details.tabId});
         }, 2000);

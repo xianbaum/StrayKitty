@@ -4,6 +4,7 @@ export class StrayKittyManager {
     private kitties: StrayKitty[];
     private grabbedKitty?: StrayKitty;
     private intervalId?: number;
+    private lastFrameTime?: number;
     private releaseGrabbedKitty = () => {
         if (this.grabbedKitty !== undefined) {
             this.grabbedKitty.release();
@@ -16,16 +17,25 @@ export class StrayKittyManager {
         }
     }
     private update = () => {
-        this.kitties.forEach((kitty) => {
-            kitty.update(this.fps);
-            if (kitty.isBeingGrabbed) {
-                if (this.grabbedKitty !== undefined &&
-                    this.grabbedKitty !== kitty) {
-                    this.releaseGrabbedKitty();
+        let now = Date.now();
+        if(this.lastFrameTime === undefined) this.lastFrameTime = now;
+        let dt = now - this.lastFrameTime;
+        if(dt >= 1000 / this.fps){
+            this.lastFrameTime = now;
+            this.kitties.forEach((kitty) => {
+                kitty.update(dt);
+                if (kitty.isBeingGrabbed) {
+                    if (this.grabbedKitty !== undefined &&
+                        this.grabbedKitty !== kitty) {
+                        this.releaseGrabbedKitty();
+                    }
+                    this.grabbedKitty = kitty;
                 }
-                this.grabbedKitty = kitty;
-            }
-        })
+            });
+        }
+        if(this.intervalId !== undefined) {
+            this.intervalId = window.requestAnimationFrame(this.update);
+        }
     }
     constructor(private fps: number) {
         document.addEventListener("mousemove", this.updateGrabbedKitty);
@@ -60,12 +70,12 @@ export class StrayKittyManager {
     }
     start(): void {
         if (this.intervalId === undefined) {
-            this.intervalId = window.setInterval(this.update, 1000 / this.fps);
+            this.intervalId = window.requestAnimationFrame(this.update);
         }
     }
     pause(): void {
         if (this.intervalId !== undefined) {
-            clearInterval(this.intervalId)
+            clearTimeout(this.intervalId)
             this.intervalId = undefined;
         }
     }

@@ -1,35 +1,67 @@
-html, body {
-    width: 300px;
+* {
     padding: 0;
     margin: 0;
 }
 
-div.container {
-    width: 100%;
+body {
+    font-family: "Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif
+}
+
+*,*:focus,*:hover{
+    outline:none;
+}
+
+div.container#successPage {
+    width: 160px;
+}
+
+div.container#errorPage {
+    width: 300px;
     font-size: 1.25rem;
     user-select: none;
 }
 
-div.content {
+div.container#errorPage {
+    width: 300px;
+    font-size: 1.25rem;
+    user-select: none;
+}
+
+div.container div.content#errorPage {
     padding: 4px 4px 4px 1em;
 }
 
-div.content h1 {
+div.content h2 {
     font-size: 1.25rem;
     font-weight: 400;
+    padding: 1rem;
 }
 
 div.content p {
     font-size: 1rem;
+    padding: 1rem;
 }
 
-div.button {
-    padding: 4px 4px 4px 1em;
+
+button {
+    padding: 16px;
     cursor: pointer;
+    border: 0;
+    background: #fff;
+    line-height: 0;
+    font-size: 0;
 }
 
-div.button:hover {
-    background-color: pink;
+button img {
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+button:hover {
+    background: pink;
 }
 
 div#successPage {

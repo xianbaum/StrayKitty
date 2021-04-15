@@ -65,6 +65,9 @@ if(arg === "jsexport.js") {
     cpx.copy(__dirname+"/node_modules/webextension-polyfill/dist/browser-polyfill.min.js", "dist/");
     cpx.copy(__dirname+"/exportables/background.js", "dist/");
     cpx.copy(__dirname+"/exportables/icon-16.png", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-16-alt.png", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-16-alt2.png", "dist/");
+    cpx.copy(__dirname+"/exportables/icon-16-eraser.png", "dist/");
     cpx.copy(__dirname+"/exportables/icon-16-gray.png", "dist/");
     cpx.copy(__dirname+"/exportables/icon-48.png", "dist/");
     cpx.copy(__dirname+"/exportables/popup.css", "dist/");

@@ -71,7 +71,7 @@ export class StrayKitty {
         [1, 2, 3],//Grabbed
         [2, 3] // Falling
     ]
-    private updateState(fps: number) {
+    private updateState(dt: number) {
         //Universal for all states except grabbing
         if (!this.isBeingGrabbed &&
             this.y < window.innerHeight - 32) {
@@ -79,7 +79,7 @@ export class StrayKitty {
         }
         switch (this.state) {
             case KittyStates.Falling:
-                this.updateFalling(fps);
+                this.updateFalling(dt);
                 break;
             case KittyStates.Laying:
                 this.updateLaying();
@@ -155,11 +155,11 @@ export class StrayKitty {
         this.checkAndChangeState(() => StrayKitty.randomState());
         this.xVector = this.direction == Direction.Right ? 2 : -2;
     }
-    private updateFalling(fps: number) {
+    private updateFalling(dt: number) {
         if (this.y < window.innerHeight - 32) {
-            this.yVector = this.yVector + 2 * (1 / fps)
+            this.yVector += dt / 250;
         } else {
-            if (Math.abs(this.yVector) < 0.1) {
+            if (Math.abs(this.yVector) < dt / 100) {
                 this.y = window.innerHeight - 32;
                 this.state = KittyStates.Standing;
             }
@@ -168,7 +168,7 @@ export class StrayKitty {
     }
     private checkAndChangeState(newStatecalculator: () => KittyStates) {
         if (this.animTimerOverdue) {
-            this.animMax = Math.floor(Math.random() * 30) + 10;
+            this.animMax = Math.floor(Math.random() * 3000) + 500;
             this.animTimer = 0;
             this.state = newStatecalculator();
             this.direction = StrayKitty.randomDir();
@@ -196,7 +196,7 @@ export class StrayKitty {
             this.y = window.innerHeight - 32
         }
     }
-    private move(fps: number) {
+    private move(dt: number) {
         if (this.state == KittyStates.Grabbed ||
             this.state == KittyStates.Standing ||
             this.state == KittyStates.Sleeping ||
@@ -206,8 +206,8 @@ export class StrayKitty {
             this.xVector = 0;
             this.yVector = 0;
         }
-        this.x += this.xVector * (100 / fps);
-        this.y += this.yVector * (100 / fps);
+        this.x += this.xVector * (dt / 10);
+        this.y += this.yVector * (dt / 10);
     }
     private draw() {
         if(!StrayKitty.imageIsLoaded) return;
@@ -221,7 +221,7 @@ export class StrayKitty {
         context.drawImage(StrayKitty.image,
             32 *
             (StrayKitty.frames[this.state]
-            [Math.floor(this.animTimer / 2) % StrayKitty.frames[this.state].length]), 32 * this.type,
+            [Math.floor(this.animTimer / 250) % StrayKitty.frames[this.state].length]), 32 * this.type,
             32, 32, 0, 0, 32, 32);
     }
     constructor(type?: KittyType) {
@@ -253,10 +253,10 @@ export class StrayKitty {
         this.state = KittyStates.Standing;
         this.canvas = <HTMLCanvasElement>document.getElementById("kittycanvas" + this.id);
     }
-    update(fps: number) {
-        this.animTimer += 10 / fps
-        this.updateState(fps);
-        this.move(fps);
+    update(dt: number) {
+        this.animTimer += dt
+        this.updateState(dt);
+        this.move(dt);
         this.checkBounds()
         this.draw();
     }
