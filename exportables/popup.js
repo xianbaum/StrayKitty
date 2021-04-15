@@ -48,19 +48,14 @@
     }
     testPage().then((pageWorks) => {
         if(pageWorks) {
-            console.log("shits not broke?")
             if(document.readyState === "complete" || document.readyState === "interactive") {
-                console.log("dom was complete")
                 initPopup();
             } else {
-                console.log("event listener added, dom was "+document.readyState)
                 document.addEventListener('DOMContentLoaded', () => {
                     initPopup();
                 });
             }
         } else {
-            console.log("shits broke")
         }
     });
-    console.log("idk man this shit ran")
 })(window.browser);
