@@ -1,4 +1,4 @@
-export enum KittyStates {
+export enum ActionType {
     Standing = 0,
     Walking = 1,
     Running = 2,
