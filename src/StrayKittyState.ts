@@ -23,11 +23,12 @@ export class StrayKittyState {
     }
 
     checkAndChangeState() {
-        if (this.animTimerOverdue) {
+        let animTimerOverdue = this.animTimerOverdue;
+        if (animTimerOverdue) {
             this.animMax = Math.floor(Math.random() * 3000) + 1000;
             this.animTimer = 0;
             this.dir = StrayKittyState.randomDir();
         }
-        return this.animTimerOverdue;
+        return animTimerOverdue;
     }
 }
