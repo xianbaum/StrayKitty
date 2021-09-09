@@ -10,6 +10,7 @@ export class FallingAction implements Action {
         } else {
             if (Math.abs(kitty.yVector) < dt / 100) {
                 kitty.y = window.innerHeight - 32;
+                kitty.yVector = 0;
                 kitty.action = new StandingAction();
             }
             kitty.yVector *= -0.5;
