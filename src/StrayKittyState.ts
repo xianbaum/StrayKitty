@@ -27,6 +27,7 @@ export class StrayKittyState {
         if (animTimerOverdue) {
             this.animMax = Math.floor(Math.random() * 3000) + 1000;
             this.animTimer = 0;
+            this.xVector = 0;
             this.dir = StrayKittyState.randomDir();
         }
         return animTimerOverdue;
