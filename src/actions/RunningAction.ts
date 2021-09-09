@@ -11,7 +11,7 @@ export class RunningAction implements Action {
         if (kitty.checkAndChangeState()) {
             kitty.action = ActionHelpers.randomAction();
         }
-        kitty.xVector = kitty.dir == Direction.Right ? 2 : -2;
+        kitty.xVector = kitty.dir == Direction.Right ? (dt / 8) : -(dt / 8);
     }
 
     readonly type = ActionType.Running;

@@ -11,7 +11,7 @@ export class WalkingAction implements Action {
         if (kitty.checkAndChangeState()) {
             kitty.action = ActionHelpers.randomAction();
         }
-        kitty.xVector = kitty.dir == Direction.Right ? 1 : -1;
+        kitty.xVector = kitty.dir == Direction.Right ? dt / 16 : -(dt / 16);
     }
 
     readonly type = ActionType.Walking;

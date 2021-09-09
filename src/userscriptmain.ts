@@ -20,7 +20,7 @@ function setCss(div: HTMLButtonElement, xPos: number) {
     div.style.textAlign = "center";
 }
 document.addEventListener('DOMContentLoaded', () => {
-    let boss = new StrayKittyManager(30);
+    let boss = new StrayKittyManager();
     boss.setImageSrc(imgsrc);
     boss.start();
     let addButton = document.createElement("button");

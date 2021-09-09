@@ -61,13 +61,15 @@ export class StrayKitty {
 
     private draw() {
         if (!StrayKitty.imageIsLoaded) return;
-        this.canvas.style.top = "" + this.state.y + "px";
-        this.canvas.style.left = "" + this.state.x + "px";
         let context = this.canvas.getContext("2d");
         if (context === null) {
             throw new ReferenceError("context is null!");
         }
         context.clearRect(0, 0, 32, 32);
+
+        this.canvas.style.transform =
+            "translate(" + this.state.x + "px," + this.state.y + "px)";
+
         context.drawImage(StrayKitty.image,
             32 *
             (this.state.action.frames
@@ -87,6 +89,7 @@ export class StrayKitty {
         this.canvas.style.zIndex = "2147400000";
         this.canvas.width = 32;
         this.canvas.height = 32;
+        this.state = new StrayKittyState();
         this.canvas.addEventListener("mousedown", (event) => {
             this.mouseXOffset = this.state.x - event.clientX;
             this.mouseYOffset = this.state.y - event.clientY;

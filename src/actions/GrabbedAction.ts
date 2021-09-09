@@ -6,8 +6,6 @@ import { ActionHelpers } from "./ActionHelpers";
 
 export class GrabbedAction implements Action {
     do(kitty: StrayKittyState, dt: number) {
-        if (ActionHelpers.checkIsFalling(kitty)) return;
-
         if (kitty.y < window.innerHeight - 32) {
             kitty.yVector += dt / 250;
         } else {

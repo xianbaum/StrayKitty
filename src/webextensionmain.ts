@@ -4,7 +4,7 @@ import { StrayKitty } from "./StrayKitty";
 var browser: any = require("webextension-polyfill");
 
 let boss: StrayKittyManager | null = null;
-let activateIcon = () => {browser.runtime.sendMessage({message: "activate_icon"})};
+let activateIcon = () => { browser.runtime.sendMessage({ message: "activate_icon" }) };
 if (document.readyState === "complete" || document.readyState === "interactive") {
     activateIcon();
 } else {
@@ -19,10 +19,10 @@ browser.runtime.onMessage.addListener(
                 case "add-3":
                     if (boss == null) {
                         StrayKitty.setImageSrc(browser.runtime.getURL("kitties.png"));
-                        boss = new StrayKittyManager(storage.fps || 60);
+                        boss = new StrayKittyManager();
                         boss.start();
                     }
-                    let number = (+message.substr(4,1)) - 1;
+                    let number = (+message.substr(4, 1)) - 1;
                     boss.addKitty(number);
                     break;
                 case "remove":
