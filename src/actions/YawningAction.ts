@@ -11,7 +11,7 @@ export class YawningAction implements Action {
         if (ActionHelpers.checkIsFalling(kitty)) return;
 
         if (kitty.checkAndChangeState()) {
-            Math.random() > 0.33 ? (
+            kitty.action = Math.random() > 0.33 ? (
                 Math.random() > 0.5 ? new WalkingAction() : new LickingAction())
                 : new LayingAction()
         }

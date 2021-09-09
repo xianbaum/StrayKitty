@@ -59,23 +59,51 @@ export class StrayKitty {
         this.state.y += this.state.yVector * (dt / 10);
     }
 
+    private lastDir: Direction = Direction.Left;
+    private lastFrame = -1;
+    private lastX = -9999;
+    private lastY = -9999;
     private draw() {
         if (!StrayKitty.imageIsLoaded) return;
         let context = this.canvas.getContext("2d");
         if (context === null) {
             throw new ReferenceError("context is null!");
         }
-        context.clearRect(0, 0, 32, 32);
+        let transform = context.getTransform();
 
-        this.canvas.style.transform =
-            "translate(" + this.state.x + "px," + this.state.y + "px)";
+        if (this.state.dir != this.lastDir) {
+            context.translate(this.canvas.width, 0);
+            context.scale(-1, 1);
+            this.lastDir = this.state.dir;
+        }
 
-        context.drawImage(StrayKitty.image,
-            32 *
-            (this.state.action.frames
-            [Math.floor(this.state.animTimer / 250)
-                % this.state.action.frames.length]), 32 * this.state.type,
-            32, 32, 0, 0, 32, 32);
+        if (this.lastX != this.state.x ||
+            this.lastY != this.state.y) {
+            this.canvas.style.transform =
+                "translate(" + this.state.x + "px," + this.state.y + "px)";
+            this.lastY = this.state.y;
+            this.lastX = this.state.x;
+        }
+
+        let frame =
+            this.state.action.frames[
+            Math.floor(this.state.animTimer / 250)
+            % this.state.action.frames.length];
+
+        if (this.lastFrame !== frame) {
+            context.clearRect(0, 0, 32, 32);
+            context.drawImage(
+                StrayKitty.image,
+                32 * frame,
+                32 * this.state.type,
+                32,
+                32,
+                0,
+                0,
+                32,
+                32);
+            this.lastFrame = frame;
+        }
     }
 
     constructor(type?: KittyType) {

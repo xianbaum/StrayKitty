@@ -8,10 +8,11 @@ export class WalkingAction implements Action {
     do(kitty: StrayKittyState, dt: number) {
         if (ActionHelpers.checkIsFalling(kitty)) return;
 
+        kitty.xVector = kitty.dir == Direction.Right ? dt / 16 : -(dt / 16);
+
         if (kitty.checkAndChangeState()) {
             kitty.action = ActionHelpers.randomAction();
         }
-        kitty.xVector = kitty.dir == Direction.Right ? dt / 16 : -(dt / 16);
     }
 
     readonly type = ActionType.Walking;
