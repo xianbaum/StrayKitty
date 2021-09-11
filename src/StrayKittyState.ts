@@ -13,6 +13,7 @@ export class StrayKittyState {
     yVector: number;
     animTimer: number;
     dir: Direction;
+    scale: number;
 
     private get animTimerOverdue() {
         return this.animTimer > this.animMax;

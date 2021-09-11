@@ -1,5 +1,4 @@
 import { StrayKittyManager } from "./StrayKittyManager";
-import { StrayKitty } from "./StrayKitty";
 
 var browser: any = require("webextension-polyfill");
 
@@ -10,28 +9,24 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 } else {
     document.addEventListener("DOMContentLoaded", activateIcon);
 }
+
 browser.runtime.onMessage.addListener(
-    (message: "add-1" | "add-2" | "add-3" | "remove" | "clear") => {
-        browser.storage.sync.get("fps").then((storage: any) => {
-            switch (message) {
-                case "add-1":
-                case "add-2":
-                case "add-3":
-                    if (boss == null) {
-                        StrayKitty.setImageSrc(browser.runtime.getURL("kitties.png"));
-                        boss = new StrayKittyManager();
-                    }
-                    let number = (+message.substr(4, 1)) - 1;
-                    boss.addKitty(number);
-                    break;
-                case "remove":
-                    if (boss != null) boss.removeKitty();
-                    break;
-                case "clear":
-                    if (boss != null) boss.clearKitties();
-                    break;
+    (message: string) => {
+        if (message.indexOf("add-") > -1) {
+            if (boss == null) {
+                boss = new StrayKittyManager();
+                boss.setImageSrc(
+                    browser.runtime.getURL("kitties.png"));
+                boss.start();
             }
-            return false;
-        });
+            let number = (+message.substr(4, 1)) - 1;
+            let scale = +message.substr(message.indexOf(",") + 1);
+            boss.addKitty(number, scale);
+        } else if (message.indexOf("remove") > -1) {
+            if (boss != null) boss.removeKitty();
+        } else if (message.indexOf("clear") > -1) {
+            if (boss != null) boss.clearKitties();
+        }
+        return false;
     });
 

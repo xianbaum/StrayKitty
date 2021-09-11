@@ -8,6 +8,8 @@ import { GrabbedAction } from "./actions/GrabbedAction";
 
 export class StrayKitty {
 
+    public static readonly CanvasWidth = 32;
+    public static readonly CanvasHeight = 32;
     private state: StrayKittyState
     id: number;
 
@@ -39,8 +41,8 @@ export class StrayKitty {
             }
             this.state.xVector = -this.state.xVector;
         }
-        else if (this.state.x > window.innerWidth - 32) {
-            this.state.x = window.innerWidth - 32;
+        else if (this.state.x > window.innerWidth - this.widthTimesScale()) {
+            this.state.x = window.innerWidth - this.widthTimesScale();
             if (this.state.action.type != ActionType.Grabbed) {
                 this.flip();
             }
@@ -49,8 +51,8 @@ export class StrayKitty {
         if (this.state.y < 0) {
             this.state.y = 0;
         }
-        else if (this.state.y > window.innerHeight - 32) {
-            this.state.y = window.innerHeight - 32
+        else if (this.state.y > window.innerHeight - StrayKitty.CanvasHeight) {
+            this.state.y = window.innerHeight - StrayKitty.CanvasHeight;
         }
     }
 
@@ -69,7 +71,8 @@ export class StrayKitty {
         if (context === null) {
             throw new ReferenceError("context is null!");
         }
-        let transform = context.getTransform();
+
+        context.imageSmoothingEnabled = false;
 
         if (this.state.dir != this.lastDir) {
             context.translate(this.canvas.width, 0);
@@ -91,39 +94,28 @@ export class StrayKitty {
             % this.state.action.frames.length];
 
         if (this.lastFrame !== frame) {
-            context.clearRect(0, 0, 32, 32);
+            context.clearRect(0, 0, this.widthTimesScale(), this.heightTimesScale());
             context.drawImage(
                 StrayKitty.image,
-                32 * frame,
-                32 * this.state.type,
-                32,
-                32,
+                StrayKitty.CanvasWidth * frame,
+                StrayKitty.CanvasHeight * this.state.type,
+                StrayKitty.CanvasWidth,
+                StrayKitty.CanvasHeight,
                 0,
                 0,
-                32,
-                32);
+                this.widthTimesScale(),
+                this.heightTimesScale());
             this.lastFrame = frame;
         }
     }
 
-    constructor(type?: KittyType) {
+    constructor(type?: KittyType, scale?: number) {
         StrayKitty.initialize();
         this.id = StrayKitty.incrementalId;
-        this.canvas = document.createElement("canvas");
-        this.canvas.id = 'kittycanvas' + this.id;
-        this.canvas.style.position = "fixed"
-        this.canvas.style.top = "0px";
-        this.canvas.style.left = "0px";
-        this.canvas.style.zIndex = "2147400000";
-        this.canvas.width = 32;
-        this.canvas.height = 32;
+
         this.state = new StrayKittyState();
-        this.canvas.addEventListener("mousedown", (event) => {
-            this.mouseXOffset = this.state.x - event.clientX;
-            this.mouseYOffset = this.state.y - event.clientY;
-            this.state.action = new GrabbedAction();
-        });
-        document.body.appendChild(this.canvas);
+        this.state.scale = scale ?? Math.random() * 3 + 1;
+
         this.state.dir = StrayKittyState.randomDir();
         this.state.type =
             typeof type === "number" ? type : Math.floor(Math.random() * 3);
@@ -133,8 +125,27 @@ export class StrayKitty {
             this.state.xVector =
             this.state.yVector =
             this.state.animTimer = 0;
-        this.state.x = Math.floor(Math.random() * window.innerWidth - 32);
+        this.state.x =
+            Math.floor(
+                Math.random() * window.innerWidth
+                - this.widthTimesScale());
         this.state.action = new StandingAction();
+
+        this.canvas = document.createElement("canvas");
+        this.canvas.id = 'kittycanvas' + this.id;
+        this.canvas.style.position = "fixed"
+        this.canvas.style.top = "0px";
+        this.canvas.style.left = "0px";
+        this.canvas.style.zIndex = "2147400000";
+        this.canvas.width = this.widthTimesScale();
+        this.canvas.height = this.heightTimesScale();
+        this.canvas.addEventListener("mousedown", (event) => {
+            this.mouseXOffset = this.state.x - event.clientX;
+            this.mouseYOffset = this.state.y - event.clientY;
+            this.state.action = new GrabbedAction();
+        });
+        document.body.appendChild(this.canvas);
+
         this.canvas = <HTMLCanvasElement>document.getElementById("kittycanvas" + this.id);
     }
 
@@ -175,6 +186,13 @@ export class StrayKitty {
         return StrayKitty.image.complete && StrayKitty.image.naturalHeight !== 0;
     }
 
+    private widthTimesScale() {
+        return this.state.scale * StrayKitty.CanvasWidth;
+    }
+
+    private heightTimesScale() {
+        return this.state.scale * StrayKitty.CanvasHeight;
+    }
     dispose() {
         document.body.removeChild(this.canvas);
     }

@@ -20,11 +20,11 @@ export class StrayKittyManager {
         return this.kitties.length;
     }
 
-    addKitty(type?: KittyType): number {
+    addKitty(type?: KittyType, scale?: number): number {
         if (this.kittyCount == 0) {
             this.start();
         }
-        return this.kitties.push(new StrayKitty(type)) - 1;
+        return this.kitties.push(new StrayKitty(type, scale)) - 1;
     }
 
     removeKitty(num?: number): void {
@@ -121,7 +121,7 @@ export class StrayKittyManager {
     // https://stackoverflow.com/questions/366601/how-can-i-convince-firefox-to-redraw-css-pseudo-elements
     private redrawState: boolean = false;
     private firefoxRedrawHack() {
-        if (typeof (window as any).installTrigger === undefined) return;
+        if (typeof (window as any).installTrigger === "undefined") return;
         if (this.redrawState) {
             document.body.style.opacity = "1";
         } else {
@@ -131,7 +131,7 @@ export class StrayKittyManager {
     }
 
     private resetFirefoxRedrawHack() {
-        if (typeof (window as any).installTrigger === undefined) return;
+        if (typeof (window as any).installTrigger === "undefined") return;
         document.body.style.opacity = "1";
     }
 }

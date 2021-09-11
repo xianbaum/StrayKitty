@@ -64,7 +64,6 @@ if(arg === "jsexport.js") {
     prepend += meta+"\n"+ base64Image;
     outname = "straykitty.user.js";
 } else if(arg === "webextensionmain.js") {
-    prepend += base64Image;
     console.log("Copying webextension and friends...");
     cpx.copy(__dirname+"/exportables/manifest.json", "dist/");
     cpx.copy(__dirname+"/node_modules/webextension-polyfill/dist/browser-polyfill.min.js", "dist/");
@@ -98,7 +97,12 @@ if(arg === "userscriptmain.js") {
         .plugin(tinyifiy)
         .bundle()
         .pipe(bundleFs);
-} else {
+} else if (arg === "webextensionmain.js") {
+    b.add("./obj/"+ "webextensionmain.js")
+
+        .bundle()
+        .pipe(bundleFs);
+}else {
     b.add("./obj/"+ process.argv[2])
         .plugin(tinyifiy)
         .plugin(prependify, prepend)

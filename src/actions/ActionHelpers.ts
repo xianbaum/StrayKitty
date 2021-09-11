@@ -8,10 +8,12 @@ import { SleepingAction } from "./SleepingAction";
 import { LayingAction } from "./LayingAction";
 import { LickingAction } from "./LickingAction";
 import { SittingAction } from "./SittingAction";
+import { StrayKitty } from "../StrayKitty";
 
 export class ActionHelpers {
     static checkIsFalling(state: StrayKittyState) {
-        if (state.y < window.innerHeight - 32) {
+        if (state.y < window.innerHeight -
+            Math.ceil(StrayKitty.CanvasHeight * state.scale)) {
             state.action = new FallingAction;
             return true;
         }

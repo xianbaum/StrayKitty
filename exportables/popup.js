@@ -3,40 +3,42 @@
     let boss = null;
     
     function initSandbox() {
-        sandboxed = true;
-        let script = document.createElement("script");
-        script.src = "straykitty.js";
-        script.type = "application/javascript";
+        let promise = new Promise((resolve, reject) => {
+            if(sandboxed) resolve();
+            sandboxed = true;
+            let script = document.createElement("script");
+            script.src = "straykitty.js";
+            script.type = "application/javascript";
 
-        let errorPopup = document.getElementById("error");
-        document.getElementById("errorMessage").style.display =
-            errorPopup.style.display = "none"
+            let errorPopup = document.getElementById("error");
+            document.getElementById("errorMessage").style.display =
+                errorPopup.style.display = "none"
 
-        document.getElementById("sandbox").style.display =
-            document.getElementById("sandboxMessage").style.display = "block";
-
-
-
-        script.onload = () => {
-            initControls();
+            document.getElementById("sandbox").style.display =
+                document.getElementById("sandboxMessage").style.display = "block";
             document.getElementById("controls").classList.add("popup");
-            let sandboxHelpButton = document.getElementById("sandboxHelpButton");
-            errorPopup.classList.add("popup");
-            errorPopup.classList.add("popup");
-            document.body.addEventListener("click", () => {
-                errorPopup.style.display = "none";
-            });
 
-            sandboxHelpButton.style.display = "flex";
-            sandboxHelpButton.addEventListener("click", (e) => {
-                if(errorPopup.style.display === "none") {
-                    errorPopup.style.display = "block";
-                    e.stopPropagation();
-                }
-            });
-        }
-        
-        document.body.appendChild(script);
+            script.onload = () => {
+                initControls();
+                let sandboxHelpButton = document.getElementById("sandboxHelpButton");
+                errorPopup.classList.add("popup");
+                errorPopup.classList.add("popup");
+                document.body.addEventListener("click", () => {
+                    errorPopup.style.display = "none";
+                });
+
+                sandboxHelpButton.style.display = "flex";
+                sandboxHelpButton.addEventListener("click", (e) => {
+                    if(errorPopup.style.display === "none") {
+                        errorPopup.style.display = "block";
+                        e.stopPropagation();
+                    }
+                });
+                resolve();
+            }
+            document.body.appendChild(script);
+        });
+        return promise;
     }
 
     function initContentScript() {
@@ -50,30 +52,29 @@
     }
 
     function sendMessageToSandbox(message) {
-        switch (message) {
-        case "add-1":
-        case "add-2":
-        case "add-3":
+        if (message.indexOf("add-") > -1) {
             if (boss == null) {
                 boss = new StrayKittyManager();
                 boss.setImageSrc("kitties.png");
                 boss.start();
             }
             let number = (+message.substr(4, 1)) - 1;
-            boss.addKitty(number);
-            break;
-        case "remove":
+            let scale = +message.substr(message.indexOf(",")+1);
+            boss.addKitty(number,scale);
+        } else if (message.indexOf("remove") > -1) {
             if (boss != null) boss.removeKitty();
-            break;
-        case "clear":
+        } else if (message.indexOf("clear") > -1) {
             if (boss != null) boss.clearKitties();
-            break;
         }
     }
 
     function sendMessageToContentScript(message, retries){
         if(typeof retries !== "number") retries = 0;
-        if(retries >= 5) showErrorPage();
+        if(retries >= 5) {
+            initSandbox().then(() => {
+                sendMessageToSandbox(message);
+            });
+        }
         window.browser.tabs.query({
             active: true, currentWindow: true
         }).then((tabs) => {
@@ -84,7 +85,12 @@
                     }, 400);
                 } else {
                     window.browser.tabs.sendMessage(
-                        tab.id, message).catch((e) => { showErrorPage(); });
+                        tab.id, message)
+                        .catch((e) => {
+                            initSandbox().then(() => {
+                                sendMessageToSandbox(message);
+                            });
+                        });
                 }
             }
         });
@@ -104,14 +110,19 @@
         });
     }
 
+    controlsInit = false;
     function initControls() {
+        if(controlsInit) return;
+        controlsInit = true;
+        let slider = document.getElementById("scaleSlider");
+
         document.getElementById("controls").style.display = "block";
         document.getElementById("add-1").addEventListener(
-            "click", () => sendMessage("add-1", 0));
+            "click", () => sendMessage("add-1," + slider.value, 0));
         document.getElementById("add-2").addEventListener(
-            "click", () => sendMessage("add-2", 0));
+            "click", () => sendMessage("add-2," + slider.value, 0));
         document.getElementById("add-3").addEventListener(
-            "click", () => sendMessage("add-3", 0));
+            "click", () => sendMessage("add-3," + slider.value, 0));
         document.getElementById("clear").addEventListener(
             "click", () => sendMessage("clear", 0));
     }

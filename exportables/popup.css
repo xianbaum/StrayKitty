@@ -106,6 +106,12 @@ button:hover {
     background: pink;
 }
 
+input {
+    width: 128px;
+    margin: auto;
+    display: block;
+}
+
 div#successPage {
     display: none;
 }
