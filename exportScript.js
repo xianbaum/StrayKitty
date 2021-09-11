@@ -111,7 +111,7 @@ if(arg === "userscriptmain.js") {
         .pipe(bundleFs);
 } else if (arg === "webextensionmain.js") {
     b.add("./obj/"+ "webextensionmain.js")
-
+        .plugin(tinyifiy)
         .bundle()
         .pipe(bundleFs);
 }else {
