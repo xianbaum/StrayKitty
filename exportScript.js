@@ -49,8 +49,6 @@ var prepend = "";
 /*specifics hack*/
 if(arg === "jsexport.js") {
     prepend += base64Image;
-    console.log("Copying demo...");
-    cpx.copy(__dirname+"/exportables/demo.html", "dist/");
     outname = "straykitty.js";
 } else if(arg === "userscriptmain.js") {
     var meta = Buffer.from(fs.
@@ -76,7 +74,7 @@ if(arg === "jsexport.js") {
     cpx.copy(__dirname+"/exportables/settings.html", "dist/");
     cpx.copy(__dirname+"/exportables/settings.js", "dist/");
     cpx.copy(__dirname+"/exportables/kitties.png", "dist/");
-    outname = "straykitty.js";
+    outname = "straykitty-webextension.js";
 }
 var bundleFs = fs.createWriteStream(__dirname + "/dist/"+outname);
 console.log("Browserifying...");

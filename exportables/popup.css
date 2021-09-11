@@ -11,24 +11,65 @@ body {
     outline:none;
 }
 
-div.container#successPage {
+#controls {
     width: 160px;
+    height: 160px;
 }
 
-div.container#errorPage {
+#error {
     width: 300px;
     font-size: 1.25rem;
-    user-select: none;
+    z-index: 200;
+    padding: 1em;
 }
 
-div.container#errorPage {
-    width: 300px;
-    font-size: 1.25rem;
-    user-select: none;
+.popup {
+    position: absolute;
+    padding: 4px;
 }
 
-div.container div.content#errorPage {
-    padding: 4px 4px 4px 1em;
+.popup#controls {
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.popup#error {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    top: 24px;
+    left: 24px;
+    background-color: #fff;
+    z-index: 200;
+}
+
+#sandbox {
+    display: none;
+    width: 480px;
+    height: 480px;
+}
+
+#sandboxHelpButton {
+    display: none;
+    width: 160px;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 8px;
+    background-color: #00a;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+}
+
+.no-select {
+    user-select: none;
 }
 
 div.content h2 {

@@ -1,9 +1,76 @@
 ((browser) => {
-    function showErrorPage() {
-        document.getElementById("errorPage").style.display = "block";
-        document.getElementById("successPage").style.display = "none";
+    let sandboxed = false;
+    let boss = null;
+    
+    function initSandbox() {
+        sandboxed = true;
+        let script = document.createElement("script");
+        script.src = "straykitty.js";
+        script.type = "application/javascript";
+
+        let errorPopup = document.getElementById("error");
+        document.getElementById("errorMessage").style.display =
+            errorPopup.style.display = "none"
+
+        document.getElementById("sandbox").style.display =
+            document.getElementById("sandboxMessage").style.display = "block";
+
+
+
+        script.onload = () => {
+            initControls();
+            document.getElementById("controls").classList.add("popup");
+            let sandboxHelpButton = document.getElementById("sandboxHelpButton");
+            errorPopup.classList.add("popup");
+            errorPopup.classList.add("popup");
+            document.body.addEventListener("click", () => {
+                errorPopup.style.display = "none";
+            });
+
+            sandboxHelpButton.style.display = "flex";
+            sandboxHelpButton.addEventListener("click", (e) => {
+                if(errorPopup.style.display === "none") {
+                    errorPopup.style.display = "block";
+                    e.stopPropagation();
+                }
+            });
+        }
+        
+        document.body.appendChild(script);
     }
-    function sendMessage(message, retries){
+
+    function initContentScript() {
+        document.getElementById("error").style.display = "none";
+        initControls();
+    }
+
+    function sendMessage(message, retries) {
+        if(sandboxed) sendMessageToSandbox(message);
+        else sendMessageToContentScript(message, retries);
+    }
+
+    function sendMessageToSandbox(message) {
+        switch (message) {
+        case "add-1":
+        case "add-2":
+        case "add-3":
+            if (boss == null) {
+                boss = new StrayKittyManager();
+                boss.start();
+            }
+            let number = (+message.substr(4, 1)) - 1;
+            boss.addKitty(number);
+            break;
+        case "remove":
+            if (boss != null) boss.removeKitty();
+            break;
+        case "clear":
+            if (boss != null) boss.clearKitties();
+            break;
+        }
+    }
+
+    function sendMessageToContentScript(message, retries){
         if(typeof retries !== "number") retries = 0;
         if(retries >= 5) showErrorPage();
         window.browser.tabs.query({
@@ -21,6 +88,7 @@
             }
         });
     }
+
     function testPage() {
         return window.browser.tabs.query({
             active: true, currentWindow: true
@@ -34,9 +102,9 @@
             return true;
         });
     }
-    function initPopup() {
-        document.getElementById("errorPage").style.display = "none";
-        document.getElementById("successPage").style.display = "block";
+
+    function initControls() {
+        document.getElementById("controls").style.display = "block";
         document.getElementById("add-1").addEventListener(
             "click", () => sendMessage("add-1", 0));
         document.getElementById("add-2").addEventListener(
@@ -46,16 +114,18 @@
         document.getElementById("clear").addEventListener(
             "click", () => sendMessage("clear", 0));
     }
+
     testPage().then((pageWorks) => {
         if(pageWorks) {
             if(document.readyState === "complete" || document.readyState === "interactive") {
-                initPopup();
+                initContentScript();
             } else {
                 document.addEventListener('DOMContentLoaded', () => {
-                    initPopup();
+                    initContentScript();
                 });
             }
         } else {
+            initSandbox();
         }
     });
 })(window.browser);

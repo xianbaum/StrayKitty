@@ -18,7 +18,7 @@
         "tsc": "npx tsc",
         "js": "npm run tsc && node exportScript.js jsexport.js",
         "userscript": "npm run tsc && node exportScript.js userscriptmain.js",
-        "webextension": "npm run tsc && node exportScript.js webextensionmain.js",
+        "webextension": "npm run tsc && node exportScript.js webextensionmain.js && node exportScript.js jsexport.js",
         "zip": "node -e \"var AdmZip = require('adm-zip'); var zip = new AdmZip(); zip.addLocalFolder('dist'); zip.writeZip('straykitty.zip')\"",
         "webextension-release": "npm run webextension && npm run zip"
     },

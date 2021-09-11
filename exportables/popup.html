@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="container" id="successPage">
+    <div id="controls">
         <button id="add-2">
           <img src="icon-16-alt2.png" />
         </button><button id="add-1">
@@ -19,13 +19,12 @@
           <img src="icon-16-eraser.png" />
         </button>
     </div>
-    <div class="container" id="errorPage">
-      <div class="content">
-        <h2>
-          Stray Kitty could not start here
-        </h2>
+    <div id="error">
+      <div class="no-select">
+        <h2 id="errorMessage">Stray Kitty could not start here</h2>
+        <h2 id="sandboxMessage">Stray Kitty has been sandboxed</h2>
         <p>
-          Stray Kitty will not work on some homepages,
+          Stray Kitty will not start on some homepages,
           settings pages, extension/add-on stores,
           or pages that begin with about://,
           chrome-extension://, or chrome://,
@@ -37,6 +36,8 @@
         </p>
       </div>
     </div>
+    <div id="sandbox"></div>
+    <div id="sandboxHelpButton" class="no-select">?</div>
     <script src="browser-polyfill.min.js" type="application/javascript"></script>
     <script src="popup.js" type="application/javascript"></script>
 </body>

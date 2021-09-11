@@ -1,4 +1,4 @@
-var browser = (window.browser)? window.browser : window.chrome;
+let browser = (window.browser)? window.browser : window.chrome;
 let timeouts = {};
 
 function clearTimeouts(tabId){
