@@ -20,7 +20,6 @@ browser.runtime.onMessage.addListener(
                     if (boss == null) {
                         StrayKitty.setImageSrc(browser.runtime.getURL("kitties.png"));
                         boss = new StrayKittyManager();
-                        boss.start();
                     }
                     let number = (+message.substr(4, 1)) - 1;
                     boss.addKitty(number);

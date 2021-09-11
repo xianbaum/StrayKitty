@@ -49,6 +49,7 @@ export class StrayKittyManager {
             k.dispose();
         }
         this.kitties = [];
+        this.pause();
     }
 
     start(): void {
@@ -56,9 +57,8 @@ export class StrayKittyManager {
     }
 
     pause(): void {
-        if (this.frameId !== undefined) {
-            window.cancelAnimationFrame(this.frameId);
-        }
+        this.cancelNextFrame();
+        this.resetFirefoxRedrawHack();
     }
 
     toggle() {
@@ -106,10 +106,15 @@ export class StrayKittyManager {
     }
 
     private queueNextFrame() {
+        this.cancelNextFrame();
+        this.frameId = window.requestAnimationFrame(this.frame);
+    }
+
+    private cancelNextFrame() {
         if (this.frameId !== undefined) {
             window.cancelAnimationFrame(this.frameId);
+            this.frameId = undefined;
         }
-        this.frameId = window.requestAnimationFrame(this.frame);
     }
 
     // Firefox will leave ugly trails without this.
@@ -123,5 +128,10 @@ export class StrayKittyManager {
             document.body.style.opacity = ".989";
         }
         this.redrawState = !this.redrawState;
+    }
+
+    private resetFirefoxRedrawHack() {
+        if (typeof (window as any).installTrigger === undefined) return;
+        document.body.style.opacity = "1";
     }
 }

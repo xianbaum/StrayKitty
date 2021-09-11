@@ -56,7 +56,6 @@
         case "add-3":
             if (boss == null) {
                 boss = new StrayKittyManager();
-                boss.start();
             }
             let number = (+message.substr(4, 1)) - 1;
             boss.addKitty(number);
