@@ -48,9 +48,16 @@ var outname = "";
 var prepend = "";
 /*specifics hack*/
 if(arg === "jsexport.js") {
-    prepend += base64Image;
+    var meta = Buffer.from(
+        fs.readFileSync(__dirname + "/exportables/js-meta.js")
+            .toString());
+    console.log("Copying demo...");
+    cpx.copy(__dirname+"/exportables/demo.html", "dist/");
+    prepend += meta+"\n"+ base64Image;
     outname = "straykitty.js";
-} else if(arg === "userscriptmain.js") {
+} else if (arg === "jsexport.js-WEB") {
+    outname = "straykitty.js";
+}else if(arg === "userscriptmain.js") {
     var meta = Buffer.from(fs.
          readFileSync(__dirname + "/exportables/userscript.meta.js")
          .toString());
@@ -80,10 +87,23 @@ var bundleFs = fs.createWriteStream(__dirname + "/dist/"+outname);
 console.log("Browserifying...");
 
 var b = browserify();
-b.add("./obj/"+ process.argv[2])
-    .plugin(tinyifiy)
-    .plugin(prependify, prepend)
-    .bundle()
-    .pipe(bundleFs);
+
+if(arg === "userscriptmain.js") {
+    b.add("./obj/"+ process.argv[2])
+        .plugin(prependify, prepend)
+        .bundle()
+        .pipe(bundleFs);
+} else if(arg === "jsexport.js-WEB") {
+    b.add("./obj/"+ "jsexport.js")
+        .plugin(tinyifiy)
+        .bundle()
+        .pipe(bundleFs);
+} else {
+    b.add("./obj/"+ process.argv[2])
+        .plugin(tinyifiy)
+        .plugin(prependify, prepend)
+        .bundle()
+        .pipe(bundleFs);
+}
 
 console.log("ok! :3");

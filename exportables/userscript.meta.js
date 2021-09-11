@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name        StrayKitty
-// @namespace   http://christianbaum.com
+// @namespace   https://christianbaum.com
 // @description A cat toy
 // @include     *
-// @version     4
+// @version     1.0.5
+// @license     https://mit-license.org/
 // @grant       none
 // ==/UserScript==

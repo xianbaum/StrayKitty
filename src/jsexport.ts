@@ -3,7 +3,9 @@ import { StrayKitty } from "./StrayKitty";
 declare var imgsrc: string;
 
 function init() {
-    StrayKitty.setImageSrc(imgsrc);
+    if ((window as any).imgsrc !== undefined) {
+        StrayKitty.setImageSrc((window as any).imgsrc);
+    }
     (<any>window).StrayKittyManager = StrayKittyManager;
 }
 
