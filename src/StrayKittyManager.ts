@@ -121,11 +121,11 @@ export class StrayKittyManager {
     // https://stackoverflow.com/questions/366601/how-can-i-convince-firefox-to-redraw-css-pseudo-elements
     private redrawState: boolean = false;
     private firefoxRedrawHack() {
-        if (typeof (window as any).installTrigger === "undefined") return;
+        if (typeof (window as any).InstallTrigger === "undefined") return;
         if (this.redrawState) {
             document.body.style.opacity = "1";
         } else {
-            document.body.style.opacity = ".98";
+            document.body.style.opacity = ".989";
         }
         this.redrawState = !this.redrawState;
     }
