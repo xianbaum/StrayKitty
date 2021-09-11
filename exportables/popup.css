@@ -25,7 +25,7 @@ body {
 
 .popup {
     position: absolute;
-    padding: 4px;
+    margin: 4px;
 }
 
 .popup#controls {
