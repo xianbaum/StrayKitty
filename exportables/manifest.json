@@ -22,14 +22,9 @@
             ]
         }
     ],
-    "options_ui": {
-        "page": "settings.html",
-        "open_in_tab": false
-    },
     "permissions": [
         "tabs",
-        "webNavigation",
-        "storage"
+        "webNavigation"
     ],
     "browser_specific_settings": {
         "gecko": {
