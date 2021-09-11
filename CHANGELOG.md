@@ -10,6 +10,7 @@ Sept 11, 2021
 - Removed FPS setting; now uses the best framerate available
 - Removed storage permission as it is no longer in use
 - Remove unused large base 64 string
+- Fixed issue with screen not clearing in some cases
 
 ## Version 1.0.4
 
