@@ -125,7 +125,7 @@ export class StrayKittyManager {
         if (this.redrawState) {
             document.body.style.opacity = "1";
         } else {
-            document.body.style.opacity = ".989";
+            document.body.style.opacity = ".98";
         }
         this.redrawState = !this.redrawState;
     }
