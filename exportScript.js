@@ -6,28 +6,40 @@ var cpx = require("cpx");
 
 var arg = process.argv[2];
 
+function cleanFolder(folder, dir) {
+    let folderDir = __dirname + "/" + folder;
+
+    let files;
+    try {
+        files = fs.readdirSync(folderDir);
+    } catch(e) {
+        return;
+    }
+
+    console.log("enter "+folderDir);
+    for(var i = 0; i < files.length; i++){
+        let file =  __dirname + "/"+folder+"/" + files[i];
+        console.log("unlink " + file);
+        fs.unlinkSync(file);
+    }
+
+    console.log("rmdir " + folderDir);
+    fs.rmdirSync(folder);
+}
+
 if(arg === "clean") {
     dir = fs.readdirSync(__dirname + "/");
     var strayKittyIndex = dir.indexOf("straykitty.zip");
-    var objIndex = dir.indexOf("obj");
-    var distIndex = dir.indexOf("dist");
+
     if(strayKittyIndex > -1) {
+        console.log("unlink straykitty.zip");
         fs.unlinkSync(__dirname + "/straykitty.zip");
     }
-    if(distIndex > -1) {
-        var dir = fs.readdirSync(__dirname + "/dist");
-        for(var i = 0; i < dir.length; i++){
-            fs.unlinkSync(__dirname + "/dist/" + dir[i]);
-        }
-        fs.rmdirSync(__dirname + "/dist");
-    }
-    if(objIndex > -1) {
-        dir = fs.readdirSync(__dirname + "/obj");
-        for(var i = 0; i < dir.length; i++){
-            fs.unlinkSync(__dirname + "/obj/" + dir[i]);
-        }
-        fs.rmdirSync(__dirname + "/obj");
-    }
+
+    cleanFolder("dist", dir);
+    cleanFolder("obj/actions", dir);
+    cleanFolder("obj", dir);
+
     console.log("all clean ;3");
     return;
 }
