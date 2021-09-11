@@ -21,6 +21,9 @@ export class StrayKittyManager {
     }
 
     addKitty(type?: KittyType): number {
+        if (this.kittyCount == 0) {
+            this.start();
+        }
         return this.kitties.push(new StrayKitty(type)) - 1;
     }
 
@@ -35,6 +38,9 @@ export class StrayKittyManager {
             for (var k of kitties) {
                 k.dispose();
             }
+        }
+        if (this.kittyCount == 0) {
+            this.pause();
         }
     }
 
