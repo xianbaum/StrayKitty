@@ -89,8 +89,6 @@ if(arg === "jsexport.js") {
     cpx.copy(__dirname+"/exportables/popup.css", "dist/");
     cpx.copy(__dirname+"/exportables/popup.js", "dist/");
     cpx.copy(__dirname+"/exportables/popup.html", "dist/");
-    cpx.copy(__dirname+"/exportables/settings.html", "dist/");
-    cpx.copy(__dirname+"/exportables/settings.js", "dist/");
     cpx.copy(__dirname+"/exportables/kitties.png", "dist/");
     outname = "straykitty-webextension.js";
 }

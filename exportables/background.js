@@ -1,34 +1,24 @@
-let browser = (window.browser)? window.browser : window.chrome;
-let timeouts = {};
+let browser = globalThis.browser ? globalThis.browser : globalThis.chrome;
 
-function clearTimeouts(tabId){
-    if(timeouts[tabId] != null) {
-        clearTimeout(timeouts[tabId]);
-        timeouts[tabId] = null;
+function setIcon(tabId, path) {
+    let done = browser.action.setIcon({path: path, tabId: tabId});
+    if (done && typeof done.catch === "function") {
+        done.catch(() => {});
     }
 }
 
 browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-    if (request.message === "activate_icon") {
-        clearTimeouts(sender.tab.id);
-        browser.browserAction.setIcon({path: "icon-16.png", tabId: sender.tab.id});
+    if (request.message === "activate_icon" && sender.tab) {
+        setIcon(sender.tab.id, "icon-16.png");
     }
 });
 
+// A page is assumed dead until its content script reports in with activate_icon.
 function handleUpdated(details) {
     if(details.frameId == 0) {
-        if(details.url.indexOf("chrome") == 0 ||
-        details.url.indexOf("about") == 0) {
-            browser.browserAction.setIcon({path: "icon-16-gray.png", tabId: details.tabId});
-        }
-        clearTimeouts(details.tabId);
-        timeouts[details.tabId] = setTimeout(() => {
-            clearTimeouts(details.tabId);
-            browser.browserAction.setIcon({path: "icon-16-gray.png", tabId: details.tabId});
-        }, 2000);
+        setIcon(details.tabId, "icon-16-gray.png");
     }
 }
 
-  
 browser.webNavigation.onCommitted.addListener(handleUpdated);

@@ -1,3 +1,11 @@
+## Version 1.1.1
+
+Aug 31, 2026
+
+- Upgrade to manifest V3
+- Modernize initialization
+- Readies instantly
+
 ## Version 1.1
 
 Sept 11, 2021
